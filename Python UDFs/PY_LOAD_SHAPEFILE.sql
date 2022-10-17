@@ -19,4 +19,5 @@ class ShapeFileReader:
         yield ((shape(record['geometry']).wkb, dict(record['properties'])))
 $$;
 
+-- An example of how to call the function
 SELECT * FROM table(PY_LOAD_SHAPEFILE('<PATH_TO_FILE>'));
