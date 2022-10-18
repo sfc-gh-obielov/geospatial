@@ -22,4 +22,4 @@ class KMLReader:
 $$;
 
 -- An example of how to call the function
-SELECT * FROM table(PY_LOAD_KML('linestring.kml'));
+SELECT * FROM table(PY_LOAD_KML('<PATH_TO_FILE>'));
