@@ -1,3 +1,7 @@
+-- 1. Upload the zip archive with Shapefiles files to pre-created stage
+put file:///Users/<LOCAL_PATH>/<FILENAME>.zip @geostage AUTO_COMPRESS = FALSE OVERWRITE = TRUE
+
+-- 2. Create a function to read Shapefiles from the stage and return it as a table
 CREATE OR REPLACE FUNCTION  PY_LOAD_SHAPEFILE(PATH_TO_FILE string)
 returns table (osm_id string, lastchange string, code integer, fclass string, 
                geomtype string, postalcode string, name string, geometry string)
@@ -17,5 +21,5 @@ class ReadShapefile:
         return tuple(gdf.itertuples(index=False, name=None))
 $$;
 
--- An example of how to call the function
+-- 3. Crate a table from the staged file
 SELECT * FROM table(PY_LOAD_SHAPEFILE('<PATH_TO_FILE>'));

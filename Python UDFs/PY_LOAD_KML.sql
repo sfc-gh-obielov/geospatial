@@ -1,3 +1,7 @@
+-- 1. Upload the zip archive with KML files to pre-created stage
+put file:///Users/<LOCAL_PATH>/<FILENAME>.zip @geostage AUTO_COMPRESS = FALSE OVERWRITE = TRUE
+
+-- 2. Create a function to read KML from the stage and return it as a table
 CREATE OR REPLACE FUNCTION PY_LOAD_KML(PATH_TO_FILE string)
 returns table (wkb binary, properties object)
 language python
@@ -21,5 +25,5 @@ class KMLReader:
         yield ((shape(record['geometry']).wkb, dict(record['properties'])))
 $$;
 
--- An example of how to call the function
-SELECT * FROM table(PY_LOAD_KML('<PATH_TO_FILE>'));
+-- 3. Crate a table from the staged file
+CREATE OR REPLACE TABLE <TABLE_NAME> AS SELECT * FROM table(PY_LOAD_KML('<PATH_TO_FILE>'));
