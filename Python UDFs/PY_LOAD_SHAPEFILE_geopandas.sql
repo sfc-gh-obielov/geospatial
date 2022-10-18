@@ -4,7 +4,7 @@ returns table (osm_id string, lastchange string, code integer, fclass string,
 language python
 runtime_version=3.8
 packages = ('geopandas')
-imports=('@geostage/shapefiles_archive.zip')
+imports=('@geostage/archive.zip')
 handler='ReadShapefile'
 as $$
 import sys
@@ -13,7 +13,7 @@ import_dir = sys._xoptions["snowflake_import_directory"]
 
 class ReadShapefile:
     def process(self, PATH_TO_FILE: str):
-        gdf = gpd.read_file(f"zip://{import_dir}/shapefiles_archive.zip/{PATH_TO_FILE}")
+        gdf = gpd.read_file(f"zip://{import_dir}/archive.zip/{PATH_TO_FILE}")
         return tuple(gdf.itertuples(index=False, name=None))
 $$;
 
